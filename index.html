@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Image Search</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-family: 'Arial Black', sans-serif;
+      color: #3498db;
+      margin-bottom: 30px;
+    }
+
+    .input-section {
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    button {
+      color: #fff;
+      background-color: #3498db;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2186c6;
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Google Image Search</h1>
+  <div class="input-section">
+    <h3>Search Images</h3>
+    <textarea id="inputNames" placeholder="Enter names separated by commas"></textarea>
+    <button onclick="searchImages()">Search Images</button>
+  </div>
+  <iframe id="searchResults"></iframe>
+</div>
+
+<script>
+  function searchImages() {
+    const namesInput = document.getElementById('inputNames').value;
+    const namesArray = namesInput.split(',').map(name => name.trim());
+    const urls = namesArray.map(name => {
+      const baseUrl = 'https://www.google.com/search';
+      const queryParams = new URLSearchParams({
+        q: name,
+        tbm: 'isch'
+        // Add other parameters here if needed
+      });
+      return `${baseUrl}?${queryParams.toString()}`;
+    });
+
+    // Construct HTML to display in iframe
+    const iframeContent = urls.map(url => `<iframe src="${url}" style="width:100%; height:100%; border:none;"></iframe>`).join('');
+
+    // Inject HTML into iframe
+    document.getElementById('searchResults').contentDocument.body.innerHTML = iframeContent;
+  }
+</script>
+</body>
+</html>
