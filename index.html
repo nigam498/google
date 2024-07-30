@@ -125,6 +125,7 @@
                 <th>Try</th>
                 <th>Starting Amount (₹)</th>
                 <th>Profit (₹)</th>
+                <th>Compound Interest (₹)</th>
                 <th>Total (₹)</th>
             </tr>
         </thead>
@@ -134,8 +135,8 @@
 </div>
 
 <footer>
-    <p>&copy; 2024 HOW TO BE RICH CALCULATION. All rights reserved. TM &amp; ® Trademarks are property of their respective owners.</p>
-    <p>Unauthorized copying or reproduction of this tool, either in electronic or physical form, is strictly prohibited. Certified and protected by digital and legal security measures.</p>
+    <p>&copy; 2024 HOW TO BE RICH CALCULATION. Created by Nigam Patel. Contact: 9662188485. All rights reserved.</p>
+    <p>MIT License. Unauthorized copying or reproduction of this tool, either in electronic or physical form, is strictly prohibited. Certified and protected by digital and legal security measures.</p>
 </footer>
 
 <script>
@@ -151,11 +152,13 @@
 
         var n = 0;
         var currentAmount = initialAmount;
+        var accumulatedInterest = 0;
         var resultTableBody = document.getElementById('resultTableBody');
         resultTableBody.innerHTML = ''; // Clear previous results
 
         while (currentAmount < finalAmount) {
             var profit = currentAmount * rateOfReturn;
+            accumulatedInterest += profit;
             var total = currentAmount + profit;
 
             var row = document.createElement('tr');
@@ -163,6 +166,7 @@
                 <td>${n + 1}</td>
                 <td>₹${currentAmount.toFixed(2)}</td>
                 <td>₹${profit.toFixed(2)}</td>
+                <td>₹${accumulatedInterest.toFixed(2)}</td>
                 <td>₹${total.toFixed(2)}</td>
             `;
             resultTableBody.appendChild(row);
