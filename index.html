@@ -34,7 +34,8 @@
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             padding: 30px;
-            width: 350px;
+            width: 80%;
+            max-width: 600px;
             margin-top: 30px;
             text-align: center;
         }
@@ -73,6 +74,24 @@
             font-size: 18px;
             color: #333;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .note {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 20px;
+        }
     </style>
     <meta name="description" content="Calculate the number of tries needed to become rich with compound investments. Use this tool to determine how many iterations it takes to reach your financial goals with a given rate of return.">
     <meta name="keywords" content="investment calculator, compound interest, financial planning, wealth accumulation, how to be rich, financial growth, rate of return, investment strategy">
@@ -85,18 +104,33 @@
 
 <div class="calculator-container">
     <h2>Investment Growth Estimator</h2>
-    <label for="finalAmount">Final Amount (₹):</label>
+    <div class="note">
+        Example: If you wish to earn with ₹10, enter 10 in the initial investment field. This tool calculates how your money grows with compound interest!
+    </div>
+    <label for="finalAmount">How much do you want to earn? (₹):</label>
     <input type="number" id="finalAmount" placeholder="Enter desired amount" required>
     
-    <label for="rateOfReturn">Rate of Return (%):</label>
+    <label for="rateOfReturn">How much interest do you make per try (%)?</label>
     <input type="number" id="rateOfReturn" placeholder="Enter rate of return" required>
 
-    <label for="initialAmount">Initial Investment (₹):</label>
+    <label for="initialAmount">Your very first X capital (₹):</label>
     <input type="number" id="initialAmount" placeholder="Enter initial investment" required>
 
     <button onclick="calculateTries()">Calculate</button>
     
     <div class="result" id="result"></div>
+    <table id="resultTable" style="display:none;">
+        <thead>
+            <tr>
+                <th>Try</th>
+                <th>Starting Amount (₹)</th>
+                <th>Profit (₹)</th>
+                <th>Total (₹)</th>
+            </tr>
+        </thead>
+        <tbody id="resultTableBody">
+        </tbody>
+    </table>
 </div>
 
 <footer>
@@ -109,16 +143,36 @@
         var finalAmount = parseFloat(document.getElementById('finalAmount').value);
         var rateOfReturn = parseFloat(document.getElementById('rateOfReturn').value) / 100;
         var initialAmount = parseFloat(document.getElementById('initialAmount').value);
-        
+
         if (isNaN(finalAmount) || isNaN(rateOfReturn) || isNaN(initialAmount) || initialAmount <= 0) {
             alert("Please enter valid numbers in all fields.");
             return;
         }
-        
-        var n = Math.log(finalAmount / initialAmount) / Math.log(1 + rateOfReturn);
-        n = Math.ceil(n); // Round up to the next whole number
 
-        document.getElementById('result').innerText = "You need approximately " + n + " tries to reach ₹" + finalAmount;
+        var n = 0;
+        var currentAmount = initialAmount;
+        var resultTableBody = document.getElementById('resultTableBody');
+        resultTableBody.innerHTML = ''; // Clear previous results
+
+        while (currentAmount < finalAmount) {
+            var profit = currentAmount * rateOfReturn;
+            var total = currentAmount + profit;
+
+            var row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${n + 1}</td>
+                <td>₹${currentAmount.toFixed(2)}</td>
+                <td>₹${profit.toFixed(2)}</td>
+                <td>₹${total.toFixed(2)}</td>
+            `;
+            resultTableBody.appendChild(row);
+
+            currentAmount = total;
+            n++;
+        }
+
+        document.getElementById('result').innerText = `You need approximately ${n} tries to reach ₹${finalAmount}`;
+        document.getElementById('resultTable').style.display = 'table';
     }
 </script>
 
