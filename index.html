@@ -1,13 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <script>while (true) {
-    window.open("file:///C:/Users/ADMIN");
-}</script>
-</body>
+<html>
+  <head>
+    <title>Get All Cookies</title>
+  </head>
+  <body>
+    <script>
+      // Get all cookies as a string
+      const cookieString = document.cookie;
+      console.log("All cookies as a string:", cookieString);
+
+      // Parse cookies into an object for easier use
+      function getCookies() {
+        const cookies = {};
+        // document.cookie returns cookies in "key=value; key2=value2" format
+        cookieString.split(";").forEach(cookie => {
+          const parts = cookie.split("=");
+          const key = parts[0].trim();
+          const value = parts.slice(1).join("=").trim();
+          if (key) {
+            cookies[key] = decodeURIComponent(value);
+          }
+        });
+        return cookies;
+      }
+
+      const allCookies = getCookies();
+      console.log("Parsed cookies:", allCookies);
+    </script>
+  </body>
 </html>
